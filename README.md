@@ -4,6 +4,12 @@ A strategic two-player game that combines cellular automata with programmable in
 
 ## How to Run
 
+### Play Online
+
+The game is automatically deployed to GitHub Pages: [Play Con Your Way](https://[your-username].github.io/con-your-way/)
+
+### Local Development
+
 ```bash
 # Install dependencies
 pnpm install
@@ -181,6 +187,23 @@ Con Your Way explores the intersection of:
 The 5-instruction limit forces players to make hard choices. Do you prioritize movement, reproduction, or combat? The simultaneous execution means you can't react to your opponent—you must anticipate their strategy.
 
 Conway's rules add a layer of natural selection: even the best-programmed cells must form patterns that survive the life-death cycle. This creates a tension between active control (instructions) and passive survival (Conway's rules).
+
+## Deployment
+
+The game automatically deploys to GitHub Pages on every push to the `main` branch.
+
+### Setup GitHub Pages
+
+1. Go to your repository Settings → Pages
+2. Under "Build and deployment", select "GitHub Actions" as the source
+3. Push to `main` branch to trigger deployment
+4. Your game will be available at `https://[your-username].github.io/con-your-way/`
+
+The workflow handles:
+- TypeScript compilation
+- Vite production build
+- Automatic deployment to GitHub Pages
+- Caching for faster builds
 
 ## Development
 
