@@ -188,6 +188,17 @@ The 5-instruction limit forces players to make hard choices. Do you prioritize m
 
 Conway's rules add a layer of natural selection: even the best-programmed cells must form patterns that survive the life-death cycle. This creates a tension between active control (instructions) and passive survival (Conway's rules).
 
+### Winning Strategies
+
+Successful setups often combine:
+
+1. **Stable Conway Patterns**: Blocks (2×2), beehives, and boats survive indefinitely
+2. **Reproductive Programs**: REPRODUCE instructions to expand territory
+3. **Defensive Positioning**: Spread cells to avoid overcrowding (>3 neighbors = death)
+4. **Strategic Movement**: MOVE to reposition and avoid enemy KILL instructions
+
+The example game demonstrates these principles with stable formations and balanced instruction programs designed to survive 100+ iterations.
+
 ## Deployment
 
 The game automatically deploys to GitHub Pages on every push to the `main` branch.
@@ -229,4 +240,4 @@ This project is private and not licensed for distribution.
 
 ---
 
-**Strategy Tip**: The most successful programs often create stable Conway patterns (like blocks or beehives) while using MOVE and KILL to disrupt the opponent's formations. Experiment with different instruction sequences to find winning combinations!
+**Example Setup**: The built-in example features stable Conway patterns (blocks and blinkers) combined with REPRODUCE-heavy instruction programs. Both players use defensive positioning to avoid overcrowding, with strategic MOVE instructions to maintain formation. This setup is designed to survive 100+ iterations, demonstrating the balance between programmed behavior and Conway's natural selection.

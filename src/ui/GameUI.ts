@@ -263,8 +263,10 @@ export class GameUI {
 
     newExampleBtn.addEventListener('click', () => {
       closeModal();
-      // Load example game URL
-      const exampleUrl = '?p1=3.2.E%2C7.8.E%2C13.8.E%2C11.2.E%2C14.8.E%2C17.14.E%2C17.15.E%2C15.13.E%2C12.9.E%2C12.8.E%2C11.4.E%2C11.3.E%2C13.3.E%2C13.2.E%2C12.2.E%2C6.8.E%2C6.11.E%2C7.10.E%2C7.9.E%2C8.10.E&p2=30.12.W%2C25.13.W%2C25.14.W%2C23.17.W%2C24.19.W%2C28.22.N%2C28.16.W%2C26.12.W%2C25.8.W%2C23.8.W%2C23.11.W%2C21.13.W%2C22.12.W%2C22.14.W%2C23.9.W%2C23.10.W%2C27.12.W%2C28.11.W%2C28.10.W%2C24.18.W&c1=MKPKI&c2=PPLMR';
+      // Load example game URL - designed for long survival with stable patterns
+      // P1: Glider pattern + blocks (stable Conway patterns) with REPRODUCE strategy
+      // P2: Blinker oscillators + defensive formation with balanced MOVE/REPRODUCE
+      const exampleUrl = '?p1=5.5.E%2C6.5.E%2C7.5.E%2C7.6.E%2C6.7.E%2C10.10.E%2C11.10.E%2C10.11.E%2C11.11.E%2C5.15.E%2C6.15.E%2C7.15.E%2C5.20.E%2C6.20.E%2C7.20.E%2C10.20.E%2C11.20.E%2C10.21.E%2C11.21.E%2C15.8.E&p2=25.5.W%2C26.5.W%2C27.5.W%2C28.10.W%2C29.10.W%2C28.11.W%2C29.11.W%2C33.8.W%2C33.9.W%2C33.10.W%2C25.15.W%2C26.15.W%2C27.15.W%2C25.20.W%2C26.20.W%2C27.20.W%2C30.20.W%2C31.20.W%2C30.21.W%2C31.21.W&c1=RRMMR&c2=RRMRM';
       window.location.href = exampleUrl;
     });
 
