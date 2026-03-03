@@ -1,0 +1,140 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - heading "Con Your Way" [level=1] [ref=e4]
+      - paragraph [ref=e5]: A duel of cellular automata
+      - button "?" [ref=e6] [cursor=pointer]
+    - generic [ref=e7]:
+      - generic [ref=e8]:
+        - generic [ref=e9]: Player 1 — Blue
+        - generic [ref=e10]:
+          - generic [ref=e11]:
+            - generic [ref=e12]: "1"
+            - combobox "Do nothing this step" [ref=e13] [cursor=pointer]:
+              - option "→ Move"
+              - option "↺ Turn Left"
+              - option "↻ Turn Right"
+              - option "✦ Reproduce"
+              - option "✕ Kill"
+              - option "· Idle" [selected]
+          - generic [ref=e14]:
+            - generic [ref=e15]: "2"
+            - combobox "Do nothing this step" [ref=e16] [cursor=pointer]:
+              - option "→ Move"
+              - option "↺ Turn Left"
+              - option "↻ Turn Right"
+              - option "✦ Reproduce"
+              - option "✕ Kill"
+              - option "· Idle" [selected]
+          - generic [ref=e17]:
+            - generic [ref=e18]: "3"
+            - combobox "Do nothing this step" [ref=e19] [cursor=pointer]:
+              - option "→ Move"
+              - option "↺ Turn Left"
+              - option "↻ Turn Right"
+              - option "✦ Reproduce"
+              - option "✕ Kill"
+              - option "· Idle" [selected]
+          - generic [ref=e20]:
+            - generic [ref=e21]: "4"
+            - combobox "Do nothing this step" [ref=e22] [cursor=pointer]:
+              - option "→ Move"
+              - option "↺ Turn Left"
+              - option "↻ Turn Right"
+              - option "✦ Reproduce"
+              - option "✕ Kill"
+              - option "· Idle" [selected]
+          - generic [ref=e23]:
+            - generic [ref=e24]: "5"
+            - combobox "Do nothing this step" [ref=e25] [cursor=pointer]:
+              - option "→ Move"
+              - option "↺ Turn Left"
+              - option "↻ Turn Right"
+              - option "✦ Reproduce"
+              - option "✕ Kill"
+              - option "· Idle" [selected]
+        - generic [ref=e26]:
+          - button "Save" [ref=e27] [cursor=pointer]
+          - button "Load ▾" [ref=e29] [cursor=pointer]
+        - generic [ref=e30]: "Cells: 0 / 20"
+        - button "🔓 Lock" [ref=e31] [cursor=pointer]
+      - generic [ref=e32]:
+        - generic [ref=e33]: "Setup: Place cells and program instructions, then lock when ready"
+        - generic [ref=e34]: "Tick: 0 / 500"
+        - generic [ref=e35]:
+          - generic [ref=e36]: Speed
+          - slider "Speed" [ref=e37] [cursor=pointer]: "200"
+          - generic [ref=e38]: 200ms
+        - generic [ref=e39]:
+          - button "▶ Start" [disabled] [ref=e40]
+          - button "⏸ Pause" [disabled] [ref=e41]
+          - button "↺ Reset" [ref=e42] [cursor=pointer]
+          - button "☰ History" [ref=e43] [cursor=pointer]
+        - button "⎘ Share" [ref=e45] [cursor=pointer]
+      - generic [ref=e46]:
+        - generic [ref=e47]: Player 2 — Red
+        - generic [ref=e48]:
+          - generic [ref=e49]:
+            - generic [ref=e50]: "1"
+            - combobox "Do nothing this step" [ref=e51] [cursor=pointer]:
+              - option "→ Move"
+              - option "↺ Turn Left"
+              - option "↻ Turn Right"
+              - option "✦ Reproduce"
+              - option "✕ Kill"
+              - option "· Idle" [selected]
+          - generic [ref=e52]:
+            - generic [ref=e53]: "2"
+            - combobox "Do nothing this step" [ref=e54] [cursor=pointer]:
+              - option "→ Move"
+              - option "↺ Turn Left"
+              - option "↻ Turn Right"
+              - option "✦ Reproduce"
+              - option "✕ Kill"
+              - option "· Idle" [selected]
+          - generic [ref=e55]:
+            - generic [ref=e56]: "3"
+            - combobox "Do nothing this step" [ref=e57] [cursor=pointer]:
+              - option "→ Move"
+              - option "↺ Turn Left"
+              - option "↻ Turn Right"
+              - option "✦ Reproduce"
+              - option "✕ Kill"
+              - option "· Idle" [selected]
+          - generic [ref=e58]:
+            - generic [ref=e59]: "4"
+            - combobox "Do nothing this step" [ref=e60] [cursor=pointer]:
+              - option "→ Move"
+              - option "↺ Turn Left"
+              - option "↻ Turn Right"
+              - option "✦ Reproduce"
+              - option "✕ Kill"
+              - option "· Idle" [selected]
+          - generic [ref=e61]:
+            - generic [ref=e62]: "5"
+            - combobox "Do nothing this step" [ref=e63] [cursor=pointer]:
+              - option "→ Move"
+              - option "↺ Turn Left"
+              - option "↻ Turn Right"
+              - option "✦ Reproduce"
+              - option "✕ Kill"
+              - option "· Idle" [selected]
+        - generic [ref=e64]:
+          - button "Save" [ref=e65] [cursor=pointer]
+          - button "Load ▾" [ref=e67] [cursor=pointer]
+        - generic [ref=e68]: "Cells: 0 / 20"
+        - button "🔓 Lock" [ref=e69] [cursor=pointer]
+    - complementary [ref=e73]:
+      - generic [ref=e75]: History
+      - generic [ref=e77]:
+        - text: No history yet.
+        - text: Start a game to save.
+    - generic [ref=e78]:
+      - generic [ref=e79]: "P1: 0 cells"
+      - generic [ref=e80]: vs
+      - generic [ref=e81]: "P2: 0 cells"
+  - text: ▸ ▸ ▸ ▸ ▸ ▸
+```
