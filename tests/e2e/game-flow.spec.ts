@@ -165,6 +165,36 @@ test.describe('Game Flow', () => {
     await expect(lockButton).toContainText('🔒 Unlock');
   });
 
+  test('should keep lock buttons visible in READY state', async ({ page }) => {
+    await page.locator('#btn-rules-close').click();
+    
+    // Place cells for both players
+    const canvas = page.locator('#game-canvas');
+    await canvas.click({ position: { x: 100, y: 100 } });
+    await canvas.click({ position: { x: 500, y: 100 } });
+    
+    // Lock both players to enter READY state
+    await page.locator('#btn-lock-p1').click();
+    await page.locator('#btn-lock-p2').click();
+    
+    // Buttons should still be visible in READY state
+    const lockButton1 = page.locator('#btn-lock-p1');
+    const lockButton2 = page.locator('#btn-lock-p2');
+    
+    await expect(lockButton1).toBeVisible();
+    await expect(lockButton2).toBeVisible();
+    await expect(lockButton1).toContainText('🔒 Unlock');
+    await expect(lockButton2).toContainText('🔒 Unlock');
+    
+    // Should be able to unlock from READY state
+    await lockButton1.click();
+    await expect(lockButton1).toContainText('🔓 Lock');
+    
+    // Should return to SETUP phase
+    const status = page.locator('#status-bar');
+    await expect(status).toContainText('Setup');
+  });
+
   test('should reset game', async ({ page }) => {
     await page.locator('#btn-rules-close').click();
     

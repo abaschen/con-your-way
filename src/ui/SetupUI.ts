@@ -100,10 +100,11 @@ export class SetupUI {
     const state = this.game.getState();
     const phase = state.phase;
     
-    this.lockP1Btn.style.display = phase === 'SETUP' ? 'block' : 'none';
-    this.lockP2Btn.style.display = phase === 'SETUP' ? 'block' : 'none';
+    // Show lock buttons in both SETUP and READY phases
+    this.lockP1Btn.style.display = (phase === 'SETUP' || phase === 'READY') ? 'block' : 'none';
+    this.lockP2Btn.style.display = (phase === 'SETUP' || phase === 'READY') ? 'block' : 'none';
 
-    if (phase === 'SETUP') {
+    if (phase === 'SETUP' || phase === 'READY') {
       // Update button text based on lock state
       this.lockP1Btn.textContent = state.p1Locked ? '🔒 Unlock' : '🔓 Lock';
       this.lockP2Btn.textContent = state.p2Locked ? '🔒 Unlock' : '🔓 Lock';

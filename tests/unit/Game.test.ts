@@ -58,6 +58,26 @@ describe('Game', () => {
       expect(game.getState().p1Locked).toBe(false);
     });
 
+    it('should allow toggling from READY phase', () => {
+      game.board.setCell(5, 5, { owner: 1, direction: 'E' });
+      game.board.setCell(25, 15, { owner: 2, direction: 'W' });
+      
+      // Lock both to reach READY
+      game.toggleLock(1);
+      game.toggleLock(2);
+      expect(game.getPhase()).toBe('READY');
+      
+      // Should be able to toggle from READY
+      game.toggleLock(1);
+      expect(game.getPhase()).toBe('SETUP');
+      expect(game.getState().p1Locked).toBe(false);
+      expect(game.getState().p2Locked).toBe(true);
+      
+      // Lock again to return to READY
+      game.toggleLock(1);
+      expect(game.getPhase()).toBe('READY');
+    });
+
     it('should unlock both players when unlockSetup called', () => {
       game.toggleLock(1);
       game.toggleLock(2);
