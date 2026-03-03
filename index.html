@@ -103,6 +103,60 @@
     <!-- Stats overlay (full-screen, shown at game end) -->
     <div id="stats-overlay" class="stats-overlay" style="display:none"></div>
 
+    <!-- Rules modal (shown on first visit) -->
+    <div id="rules-modal" class="rules-modal" style="display:none">
+      <div class="rules-content">
+        <h2>Welcome to Con Your Way!</h2>
+        <p class="rules-subtitle">A strategic duel of cellular automata</p>
+        
+        <div class="rules-section">
+          <h3>How to Play</h3>
+          <ol>
+            <li><strong>Setup Phase:</strong> Each player places up to 20 cells on their half of the board</li>
+            <li><strong>Program:</strong> Choose 5 instructions that all your cells will execute</li>
+            <li><strong>Battle:</strong> Watch your cells execute their programs while Conway's Game of Life rules apply</li>
+          </ol>
+        </div>
+
+        <div class="rules-section">
+          <h3>Instructions</h3>
+          <ul class="instructions-list">
+            <li><strong>MOVE:</strong> Move forward in facing direction</li>
+            <li><strong>TURN_LEFT:</strong> Rotate 90° counter-clockwise</li>
+            <li><strong>TURN_RIGHT:</strong> Rotate 90° clockwise</li>
+            <li><strong>REPRODUCE:</strong> Spawn a child cell ahead (if empty)</li>
+            <li><strong>KILL:</strong> Remove any cell directly ahead</li>
+            <li><strong>IDLE:</strong> Do nothing</li>
+          </ul>
+        </div>
+
+        <div class="rules-section">
+          <h3>Conway's Rules</h3>
+          <p>After each instruction cycle, Conway's Game of Life rules apply:</p>
+          <ul>
+            <li>Cells with 2-3 neighbors survive</li>
+            <li>Cells with &lt;2 or &gt;3 neighbors die</li>
+            <li>Empty cells with exactly 3 neighbors become alive</li>
+          </ul>
+        </div>
+
+        <div class="rules-section">
+          <h3>Victory Conditions</h3>
+          <ul>
+            <li><strong>Elimination:</strong> Opponent has no cells remaining</li>
+            <li><strong>Stalemate:</strong> Board unchanged for 3 ticks (winner by cell count)</li>
+            <li><strong>Timeout:</strong> 500 ticks elapse (winner by cell count)</li>
+          </ul>
+        </div>
+
+        <div class="rules-tips">
+          <strong>💡 Tip:</strong> Right-click cells during setup to change their direction!
+        </div>
+
+        <button class="btn btn-primary btn-rules-close" id="btn-rules-close">Start Playing</button>
+      </div>
+    </div>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

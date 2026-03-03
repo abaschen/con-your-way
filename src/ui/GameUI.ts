@@ -134,6 +134,7 @@ export class GameUI {
 
     this.game.on((state) => this.handleStateChange(state));
     this.applyUrlState();
+    this.showRulesIfFirstVisit();
     this.handleStateChange(this.game.getState());
     this.renderLoop();
   }
@@ -227,6 +228,33 @@ export class GameUI {
       if (shared.p2Cells?.length) {
         this.game.finishSetupP2();
       }
+    }
+  }
+
+  // ── Rules modal ─────────────────────────────────────────────────────────────
+
+  private showRulesIfFirstVisit(): void {
+    const RULES_SEEN_KEY = 'con-your-way-rules-seen';
+    const hasSeenRules = localStorage.getItem(RULES_SEEN_KEY);
+
+    if (!hasSeenRules) {
+      const modal = document.getElementById('rules-modal')!;
+      const closeBtn = document.getElementById('btn-rules-close')!;
+
+      modal.style.display = 'flex';
+
+      closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+        localStorage.setItem(RULES_SEEN_KEY, 'true');
+      });
+
+      // Close on backdrop click
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+          localStorage.setItem(RULES_SEEN_KEY, 'true');
+        }
+      });
     }
   }
 
