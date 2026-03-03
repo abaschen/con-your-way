@@ -162,6 +162,59 @@ describe('Game', () => {
       game.tick_();
       expect(game.getState().tick).toBe(initialTick + 1);
     });
+
+    it('should detect oscillating patterns (blinker)', () => {
+      // Create a horizontal blinker pattern
+      game.board.setCell(5, 5, { owner: 1, direction: 'E' });
+      game.board.setCell(6, 5, { owner: 1, direction: 'E' });
+      game.board.setCell(7, 5, { owner: 1, direction: 'E' });
+      
+      // Add a cell for player 2 to avoid elimination
+      game.board.setCell(25, 15, { owner: 2, direction: 'W' });
+      game.board.setCell(26, 15, { owner: 2, direction: 'W' });
+      game.board.setCell(25, 16, { owner: 2, direction: 'W' });
+      game.board.setCell(26, 16, { owner: 2, direction: 'W' });
+      
+      game.toggleLock(1);
+      game.toggleLock(2);
+      game.start();
+      
+      // Run several ticks - blinker oscillates with period 2
+      for (let i = 0; i < 10; i++) {
+        if (game.getPhase() === 'ENDED') break;
+        game.tick_();
+      }
+      
+      // Should detect the cycle and end the game
+      expect(game.getPhase()).toBe('ENDED');
+    });
+
+    it('should detect stable patterns (block)', () => {
+      // Create a 2x2 block (stable pattern)
+      game.board.setCell(5, 5, { owner: 1, direction: 'E' });
+      game.board.setCell(6, 5, { owner: 1, direction: 'E' });
+      game.board.setCell(5, 6, { owner: 1, direction: 'E' });
+      game.board.setCell(6, 6, { owner: 1, direction: 'E' });
+      
+      // Add a block for player 2
+      game.board.setCell(25, 15, { owner: 2, direction: 'W' });
+      game.board.setCell(26, 15, { owner: 2, direction: 'W' });
+      game.board.setCell(25, 16, { owner: 2, direction: 'W' });
+      game.board.setCell(26, 16, { owner: 2, direction: 'W' });
+      
+      game.toggleLock(1);
+      game.toggleLock(2);
+      game.start();
+      
+      // Run a few ticks - stable pattern should be detected
+      for (let i = 0; i < 5; i++) {
+        if (game.getPhase() === 'ENDED') break;
+        game.tick_();
+      }
+      
+      // Should detect stale board (same state for 3 ticks)
+      expect(game.getPhase()).toBe('ENDED');
+    });
   });
 
   describe('cell counting', () => {

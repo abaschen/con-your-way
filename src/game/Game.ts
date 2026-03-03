@@ -27,6 +27,7 @@ export interface GameState {
 export type GameListener = (state: GameState) => void;
 
 const STALE_THRESHOLD = 3;
+const CYCLE_DETECTION_WINDOW = 10; // Check last 10 states for cycles
 
 export class Game {
   readonly board: Board;
@@ -48,6 +49,7 @@ export class Game {
   private history: BoardState[] = [];
   private lastBoardHash = '';
   private staleCount = 0;
+  private recentHashes: string[] = []; // Track recent board hashes for cycle detection
 
   // Replay state
   private replayIndex: number | null = null;
@@ -178,6 +180,7 @@ export class Game {
     this.history = [];
     this.lastBoardHash = '';
     this.staleCount = 0;
+    this.recentHashes = [];
     this.statsData = createGameStats(this.config.boardWidth, this.config.boardHeight);
     this.p1Config = { program: ['IDLE', 'IDLE', 'IDLE', 'IDLE', 'IDLE'] };
     this.p2Config = { program: ['IDLE', 'IDLE', 'IDLE', 'IDLE', 'IDLE'] };
@@ -253,7 +256,7 @@ export class Game {
     // 4. Record history snapshot
     this.history.push(this.board.clone());
 
-    // 5. Stale board detection
+    // 5. Stale board detection and cycle detection
     const hash = this.board.serialize();
     if (hash === this.lastBoardHash) {
       this.staleCount++;
@@ -262,6 +265,15 @@ export class Game {
       this.lastBoardHash = hash;
     }
 
+    // Track recent hashes for cycle detection
+    this.recentHashes.push(hash);
+    if (this.recentHashes.length > CYCLE_DETECTION_WINDOW) {
+      this.recentHashes.shift();
+    }
+
+    // Detect cycles (oscillating patterns like blinkers)
+    const cycleLength = this.detectCycle();
+
     // 6. Check win / end conditions
     if (p1AfterConway === 0 && p2AfterConway === 0) {
       this.endGame('draw', 'elimination');
@@ -269,6 +281,10 @@ export class Game {
       this.endGame(2, 'elimination');
     } else if (p2AfterConway === 0) {
       this.endGame(1, 'elimination');
+    } else if (cycleLength > 0) {
+      // Detected a repeating cycle
+      const w = p1AfterConway > p2AfterConway ? 1 : p2AfterConway > p1AfterConway ? 2 : 'draw';
+      this.endGame(w, 'stale');
     } else if (this.staleCount >= STALE_THRESHOLD) {
       const w = p1AfterConway > p2AfterConway ? 1 : p2AfterConway > p1AfterConway ? 2 : 'draw';
       this.endGame(w, 'stale');
@@ -278,6 +294,35 @@ export class Game {
     } else {
       this.emit();
     }
+  }
+
+  /**
+   * Detect if the board is in a repeating cycle (e.g., blinker oscillating between 2 states)
+   * Returns the cycle length if detected, 0 otherwise
+   */
+  private detectCycle(): number {
+    if (this.recentHashes.length < 4) return 0; // Need at least 4 states to detect a cycle
+
+    // Check for cycles of length 2-5 (most common oscillators)
+    for (let cycleLen = 2; cycleLen <= 5; cycleLen++) {
+      if (this.recentHashes.length < cycleLen * 2) continue;
+
+      let isCycle = true;
+      for (let i = 1; i <= cycleLen; i++) {
+        const idx1 = this.recentHashes.length - i;
+        const idx2 = this.recentHashes.length - i - cycleLen;
+        if (idx2 < 0 || this.recentHashes[idx1] !== this.recentHashes[idx2]) {
+          isCycle = false;
+          break;
+        }
+      }
+
+      if (isCycle) {
+        return cycleLen;
+      }
+    }
+
+    return 0;
   }
 
   private updateHeatMap(): void {
