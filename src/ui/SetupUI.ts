@@ -46,7 +46,7 @@ export class SetupUI {
     this.previewValueP2 = document.getElementById('preview-value-p2')!;
 
     this.lockP1Btn.addEventListener('click', () => {
-      if (this.game.board.countOwner(1) === 0) {
+      if (this.game.board.countOwner(1) === 0 && !this.game.getState().p1Locked) {
         alert('Place at least one cell before locking!');
         return;
       }
@@ -54,7 +54,7 @@ export class SetupUI {
     });
 
     this.lockP2Btn.addEventListener('click', () => {
-      if (this.game.board.countOwner(2) === 0) {
+      if (this.game.board.countOwner(2) === 0 && !this.game.getState().p2Locked) {
         alert('Place at least one cell before locking!');
         return;
       }
@@ -104,10 +104,13 @@ export class SetupUI {
     this.lockP2Btn.style.display = phase === 'SETUP' ? 'block' : 'none';
 
     if (phase === 'SETUP') {
-      this.lockP1Btn.textContent = state.p1Locked ? '🔒 Locked' : '🔓 Lock Setup';
-      this.lockP2Btn.textContent = state.p2Locked ? '🔒 Locked' : '🔓 Lock Setup';
-      this.lockP1Btn.disabled = state.p1Locked;
-      this.lockP2Btn.disabled = state.p2Locked;
+      // Update button text based on lock state
+      this.lockP1Btn.textContent = state.p1Locked ? '🔒 Unlock' : '🔓 Lock';
+      this.lockP2Btn.textContent = state.p2Locked ? '🔒 Unlock' : '🔓 Lock';
+      
+      // Buttons are always enabled - they toggle lock state
+      this.lockP1Btn.disabled = false;
+      this.lockP2Btn.disabled = false;
     }
 
     this.updateCounters();

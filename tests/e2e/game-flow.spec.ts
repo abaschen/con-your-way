@@ -54,11 +54,11 @@ test.describe('Game Flow', () => {
     
     // Lock player 1
     await page.locator('#btn-lock-p1').click();
-    await expect(page.locator('#btn-lock-p1')).toContainText('🔒 Locked');
+    await expect(page.locator('#btn-lock-p1')).toContainText('🔒 Unlock');
     
     // Lock player 2
     await page.locator('#btn-lock-p2').click();
-    await expect(page.locator('#btn-lock-p2')).toContainText('🔒 Locked');
+    await expect(page.locator('#btn-lock-p2')).toContainText('🔒 Unlock');
     
     // Start button should be enabled
     const startButton = page.locator('#btn-start');
@@ -102,6 +102,13 @@ test.describe('Game Flow', () => {
     
     // Counter should still be 1
     await expect(counter1).toContainText('Cells: 1 / 20');
+    
+    // Unlock and try again
+    await page.locator('#btn-lock-p1').click();
+    await canvas.click({ position: { x: 150, y: 100 } });
+    
+    // Counter should now be 2
+    await expect(counter1).toContainText('Cells: 2 / 20');
   });
 
   test('should show help button and reopen rules', async ({ page }) => {
@@ -127,9 +134,35 @@ test.describe('Game Flow', () => {
     await expect(counter1).toContainText('Cells:');
     await expect(counter2).toContainText('Cells:');
     
-    // Should be in READY state
-    const startButton = page.locator('#btn-start');
-    await expect(startButton).toBeEnabled();
+    // Should be unlocked (not auto-locked from URL)
+    const lockButton1 = page.locator('#btn-lock-p1');
+    const lockButton2 = page.locator('#btn-lock-p2');
+    await expect(lockButton1).toContainText('🔓 Lock');
+    await expect(lockButton2).toContainText('🔓 Lock');
+  });
+
+  test('should toggle lock state', async ({ page }) => {
+    await page.locator('#btn-rules-close').click();
+    
+    const canvas = page.locator('#game-canvas');
+    await canvas.click({ position: { x: 100, y: 100 } });
+    
+    const lockButton = page.locator('#btn-lock-p1');
+    
+    // Initially unlocked
+    await expect(lockButton).toContainText('🔓 Lock');
+    
+    // Lock
+    await lockButton.click();
+    await expect(lockButton).toContainText('🔒 Unlock');
+    
+    // Unlock
+    await lockButton.click();
+    await expect(lockButton).toContainText('🔓 Lock');
+    
+    // Lock again
+    await lockButton.click();
+    await expect(lockButton).toContainText('🔒 Unlock');
   });
 
   test('should reset game', async ({ page }) => {
@@ -148,6 +181,6 @@ test.describe('Game Flow', () => {
     await expect(counter1).toContainText('Cells: 0 / 20');
     
     const lockButton = page.locator('#btn-lock-p1');
-    await expect(lockButton).toContainText('🔓 Lock Setup');
+    await expect(lockButton).toContainText('🔓 Lock');
   });
 });

@@ -97,7 +97,8 @@ export class Game {
   // --- Setup phase transitions ---
 
   toggleLock(owner: Owner): void {
-    if (this.phase !== 'SETUP') return;
+    if (this.phase !== 'SETUP' && this.phase !== 'READY') return;
+    
     if (owner === 1) {
       this.p1Locked = !this.p1Locked;
     } else {
@@ -107,6 +108,9 @@ export class Game {
     // If both locked, move to READY
     if (this.p1Locked && this.p2Locked) {
       this.phase = 'READY';
+    } else {
+      // If either unlocked, go back to SETUP
+      this.phase = 'SETUP';
     }
     this.emit();
   }

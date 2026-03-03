@@ -196,8 +196,7 @@ export class GameUI {
     this.panelP1.loadProgram(play.p1Program);
     this.panelP2.loadProgram(play.p2Program);
 
-    this.game.toggleLock(1);
-    this.game.toggleLock(2);
+    // Don't auto-lock when loading saved play - let players review
 
     this.setupUI.updateCounters();
     this.syncUrl();
@@ -223,11 +222,7 @@ export class GameUI {
       }
     }
 
-    // Lock both players if both have cells
-    if (shared.p1Cells?.length && shared.p2Cells?.length) {
-      this.game.toggleLock(1);
-      this.game.toggleLock(2);
-    }
+    // Don't auto-lock when loading from URL - let players review and lock manually
   }
 
   // ── Rules modal ─────────────────────────────────────────────────────────────
@@ -269,7 +264,7 @@ export class GameUI {
     newExampleBtn.addEventListener('click', () => {
       closeModal();
       // Load example game URL
-      const exampleUrl = '?p1=3.7.E%2C5.8.E%2C6.11.E%2C7.12.E%2C8.7.E%2C10.9.E%2C13.11.E%2C15.8.E%2C14.5.E%2C17.5.E%2C17.11.E%2C16.14.E%2C12.18.E%2C8.17.E%2C5.14.E%2C4.11.E%2C5.4.E%2C5.2.E%2C10.3.E%2C13.3.E&p2=30.8.W%2C29.11.W%2C26.12.N%2C30.16.W%2C27.18.W%2C24.18.N%2C33.20.W%2C34.11.N%2C32.6.W%2C32.8.W%2C34.8.W%2C32.5.N%2C26.5.N%2C26.9.N%2C35.11.W%2C34.13.W%2C33.14.W&c1=MKPKI&c2=PPLMR';
+      const exampleUrl = '?p1=3.2.E%2C7.8.E%2C13.8.E%2C11.2.E%2C14.8.E%2C17.14.E%2C17.15.E%2C15.13.E%2C12.9.E%2C12.8.E%2C11.4.E%2C11.3.E%2C13.3.E%2C13.2.E%2C12.2.E%2C6.8.E%2C6.11.E%2C7.10.E%2C7.9.E%2C8.10.E&p2=30.12.W%2C25.13.W%2C25.14.W%2C23.17.W%2C24.19.W%2C28.22.N%2C28.16.W%2C26.12.W%2C25.8.W%2C23.8.W%2C23.11.W%2C21.13.W%2C22.12.W%2C22.14.W%2C23.9.W%2C23.10.W%2C27.12.W%2C28.11.W%2C28.10.W%2C24.18.W&c1=MKPKI&c2=PPLMR';
       window.location.href = exampleUrl;
     });
 
