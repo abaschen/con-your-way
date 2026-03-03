@@ -43,6 +43,7 @@ body {
 .game-header {
   text-align: center;
   padding: 4px 0;
+  position: relative;
 }
 
 .game-header h1 {
@@ -56,6 +57,32 @@ body {
   font-size: 0.75rem;
   color: var(--text-muted);
   margin-top: 2px;
+}
+
+.btn-help {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(74, 144, 226, 0.15);
+  border: 1px solid rgba(74, 144, 226, 0.3);
+  color: var(--accent);
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.btn-help:hover {
+  background: rgba(74, 144, 226, 0.25);
+  border-color: rgba(74, 144, 226, 0.5);
+  transform: scale(1.08);
 }
 
 /* ===== Panels Row ===== */

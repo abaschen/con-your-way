@@ -238,33 +238,50 @@ export class GameUI {
     const hasSeenRules = localStorage.getItem(RULES_SEEN_KEY);
 
     if (!hasSeenRules) {
-      const modal = document.getElementById('rules-modal')!;
-      const closeBtn = document.getElementById('btn-rules-close')!;
-      const exampleBtn = document.getElementById('btn-rules-example')!;
-
-      modal.style.display = 'flex';
-
-      const closeModal = () => {
-        modal.style.display = 'none';
-        localStorage.setItem(RULES_SEEN_KEY, 'true');
-      };
-
-      closeBtn.addEventListener('click', closeModal);
-
-      exampleBtn.addEventListener('click', () => {
-        closeModal();
-        // Load example game URL
-        const exampleUrl = '?p1=3.7.E%2C5.8.E%2C6.11.E%2C7.12.E%2C8.7.E%2C10.9.E%2C13.11.E%2C15.8.E%2C14.5.E%2C17.5.E%2C17.11.E%2C16.14.E%2C12.18.E%2C8.17.E%2C5.14.E%2C4.11.E%2C5.4.E%2C5.2.E%2C10.3.E%2C13.3.E&p2=30.8.W%2C29.11.W%2C26.12.N%2C30.16.W%2C27.18.W%2C24.18.N%2C33.20.W%2C34.11.N%2C32.6.W%2C32.8.W%2C34.8.W%2C32.5.N%2C26.5.N%2C26.9.N%2C35.11.W%2C34.13.W%2C33.14.W&c1=MKPKI&c2=PPLMR';
-        window.location.href = exampleUrl;
-      });
-
-      // Close on backdrop click
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-          closeModal();
-        }
-      });
+      this.showRulesModal();
     }
+
+    // Help button to reopen rules
+    const helpBtn = document.getElementById('btn-help')!;
+    helpBtn.addEventListener('click', () => this.showRulesModal());
+  }
+
+  private showRulesModal(): void {
+    const RULES_SEEN_KEY = 'con-your-way-rules-seen';
+    const modal = document.getElementById('rules-modal')!;
+    const closeBtn = document.getElementById('btn-rules-close')!;
+    const exampleBtn = document.getElementById('btn-rules-example')!;
+
+    modal.style.display = 'flex';
+
+    const closeModal = () => {
+      modal.style.display = 'none';
+      localStorage.setItem(RULES_SEEN_KEY, 'true');
+    };
+
+    // Remove old listeners by cloning and replacing
+    const newCloseBtn = closeBtn.cloneNode(true) as HTMLButtonElement;
+    closeBtn.parentNode!.replaceChild(newCloseBtn, closeBtn);
+    const newExampleBtn = exampleBtn.cloneNode(true) as HTMLButtonElement;
+    exampleBtn.parentNode!.replaceChild(newExampleBtn, exampleBtn);
+
+    newCloseBtn.addEventListener('click', closeModal);
+
+    newExampleBtn.addEventListener('click', () => {
+      closeModal();
+      // Load example game URL
+      const exampleUrl = '?p1=3.7.E%2C5.8.E%2C6.11.E%2C7.12.E%2C8.7.E%2C10.9.E%2C13.11.E%2C15.8.E%2C14.5.E%2C17.5.E%2C17.11.E%2C16.14.E%2C12.18.E%2C8.17.E%2C5.14.E%2C4.11.E%2C5.4.E%2C5.2.E%2C10.3.E%2C13.3.E&p2=30.8.W%2C29.11.W%2C26.12.N%2C30.16.W%2C27.18.W%2C24.18.N%2C33.20.W%2C34.11.N%2C32.6.W%2C32.8.W%2C34.8.W%2C32.5.N%2C26.5.N%2C26.9.N%2C35.11.W%2C34.13.W%2C33.14.W&c1=MKPKI&c2=PPLMR';
+      window.location.href = exampleUrl;
+    });
+
+    // Close on backdrop click
+    const backdropHandler = (e: MouseEvent) => {
+      if (e.target === modal) {
+        closeModal();
+        modal.removeEventListener('click', backdropHandler);
+      }
+    };
+    modal.addEventListener('click', backdropHandler);
   }
 
   // ── Reset ───────────────────────────────────────────────────────────────────
