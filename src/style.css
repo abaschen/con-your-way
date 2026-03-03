@@ -809,11 +809,27 @@ body {
   color: #ddd;
 }
 
-.btn-rules-close {
-  width: 100%;
+.rules-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.rules-buttons .btn {
+  flex: 1;
   padding: 14px;
   font-size: 18px;
-  margin-top: 8px;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 /* Scrollbar styling for rules content */
