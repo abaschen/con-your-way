@@ -87,7 +87,7 @@ export class SaveLoadUI {
   }
 
   updateVisibility(phase: GamePhase): void {
-    const canSave = phase === 'SETUP_P1' || phase === 'SETUP_P2' || phase === 'READY';
+    const canSave = phase === 'SETUP' || phase === 'READY';
     this.saveRows[0].style.display = canSave ? 'flex' : 'none';
     this.saveRows[1].style.display = canSave ? 'flex' : 'none';
     this.shareBtn.style.display = canSave ? 'inline-flex' : 'none';

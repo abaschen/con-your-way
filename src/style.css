@@ -164,6 +164,26 @@ body {
   color: var(--text-muted);
 }
 
+.conway-preview {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  padding: 6px 10px;
+  background: rgba(74, 144, 226, 0.1);
+  border-radius: 4px;
+  border: 1px solid rgba(74, 144, 226, 0.2);
+}
+
+.preview-label {
+  opacity: 0.8;
+}
+
+.preview-value {
+  font-weight: bold;
+  color: var(--accent);
+  margin-left: 4px;
+}
+
 /* ===== Center Controls ===== */
 .center-controls {
   display: flex;

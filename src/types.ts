@@ -1,6 +1,6 @@
 export type Owner = 1 | 2;
 export type Direction = 'N' | 'E' | 'S' | 'W';
-export type GamePhase = 'SETUP_P1' | 'SETUP_P2' | 'READY' | 'RUNNING' | 'PAUSED' | 'ENDED';
+export type GamePhase = 'SETUP' | 'READY' | 'RUNNING' | 'PAUSED' | 'ENDED';
 
 export interface CellState {
   owner: Owner;

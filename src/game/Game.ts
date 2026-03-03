@@ -17,6 +17,8 @@ export interface GameState {
   tick: number;
   p1Cells: number;
   p2Cells: number;
+  p1Locked: boolean;
+  p2Locked: boolean;
   winner: Owner | 'draw' | null;
   historyLength: number;
   replayIndex: number | null;
@@ -34,7 +36,9 @@ export class Game {
   p1Config: PlayerConfig = { program: ['IDLE', 'IDLE', 'IDLE', 'IDLE', 'IDLE'] };
   p2Config: PlayerConfig = { program: ['IDLE', 'IDLE', 'IDLE', 'IDLE', 'IDLE'] };
 
-  private phase: GamePhase = 'SETUP_P1';
+  private phase: GamePhase = 'SETUP';
+  private p1Locked = false;
+  private p2Locked = false;
   private tick = 0;
   private winner: Owner | 'draw' | null = null;
   private intervalId: ReturnType<typeof setInterval> | null = null;
@@ -65,6 +69,8 @@ export class Game {
       tick: this.tick,
       p1Cells: this.board.countOwner(1),
       p2Cells: this.board.countOwner(2),
+      p1Locked: this.p1Locked,
+      p2Locked: this.p2Locked,
       winner: this.winner,
       historyLength: this.history.length,
       replayIndex: this.replayIndex,
@@ -90,15 +96,27 @@ export class Game {
 
   // --- Setup phase transitions ---
 
-  finishSetupP1(): void {
-    if (this.phase !== 'SETUP_P1') return;
-    this.phase = 'SETUP_P2';
+  toggleLock(owner: Owner): void {
+    if (this.phase !== 'SETUP') return;
+    if (owner === 1) {
+      this.p1Locked = !this.p1Locked;
+    } else {
+      this.p2Locked = !this.p2Locked;
+    }
+    
+    // If both locked, move to READY
+    if (this.p1Locked && this.p2Locked) {
+      this.phase = 'READY';
+    }
     this.emit();
   }
 
-  finishSetupP2(): void {
-    if (this.phase !== 'SETUP_P2') return;
-    this.phase = 'READY';
+  unlockSetup(): void {
+    this.p1Locked = false;
+    this.p2Locked = false;
+    if (this.phase === 'READY') {
+      this.phase = 'SETUP';
+    }
     this.emit();
   }
 
@@ -148,7 +166,9 @@ export class Game {
     const cfg = newConfig ? { ...this.config, ...newConfig } : this.config;
     Object.assign(this.config, cfg);
     this.board.clear();
-    this.phase = 'SETUP_P1';
+    this.phase = 'SETUP';
+    this.p1Locked = false;
+    this.p2Locked = false;
     this.tick = 0;
     this.winner = null;
     this.history = [];

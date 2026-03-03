@@ -97,7 +97,7 @@ export class BoardRenderer {
     ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
     // Setup zone highlights
-    if (phase === 'SETUP_P1' || phase === 'SETUP_P2') {
+    if (phase === 'SETUP') {
       const halfW = Math.floor(W / 2);
       ctx.fillStyle = COLORS.setupHighlight1;
       ctx.fillRect(offsetX, offsetY, halfW * cellSize, H * cellSize);
@@ -122,7 +122,7 @@ export class BoardRenderer {
     }
 
     // Center divider during setup/ready
-    if (phase === 'SETUP_P1' || phase === 'SETUP_P2' || phase === 'READY') {
+    if (phase === 'SETUP' || phase === 'READY') {
       const halfW = Math.floor(W / 2);
       ctx.strokeStyle = COLORS.divider;
       ctx.lineWidth = 2;

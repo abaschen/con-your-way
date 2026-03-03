@@ -143,7 +143,7 @@ export class GameUI {
 
   private syncUrl(): void {
     const phase = this.game.getPhase();
-    if (phase !== 'SETUP_P1' && phase !== 'SETUP_P2' && phase !== 'READY') return;
+    if (phase !== 'SETUP' && phase !== 'READY') return;
 
     const p1Cells = this.game.board.allCells()
       .filter(({ cell }) => cell.owner === 1)
@@ -196,8 +196,8 @@ export class GameUI {
     this.panelP1.loadProgram(play.p1Program);
     this.panelP2.loadProgram(play.p2Program);
 
-    this.game.finishSetupP1();
-    this.game.finishSetupP2();
+    this.game.toggleLock(1);
+    this.game.toggleLock(2);
 
     this.setupUI.updateCounters();
     this.syncUrl();
@@ -223,11 +223,10 @@ export class GameUI {
       }
     }
 
-    if (shared.p1Cells?.length) {
-      this.game.finishSetupP1();
-      if (shared.p2Cells?.length) {
-        this.game.finishSetupP2();
-      }
+    // Lock both players if both have cells
+    if (shared.p1Cells?.length && shared.p2Cells?.length) {
+      this.game.toggleLock(1);
+      this.game.toggleLock(2);
     }
   }
 
@@ -325,8 +324,7 @@ export class GameUI {
     const { phase, tick, p1Cells, p2Cells, winner, historyLength, replayIndex } = state;
 
     const statusMessages: Record<string, string> = {
-      SETUP_P1: 'Player 1: Click your half to place cells (right-click to rotate)',
-      SETUP_P2: 'Player 2: Click your half to place cells (right-click to rotate)',
+      SETUP: 'Setup: Place cells and program instructions, then lock when ready',
       READY: 'Ready — press Start when both players are set',
       RUNNING: 'Battle in progress...',
       PAUSED: 'Paused',
@@ -341,9 +339,9 @@ export class GameUI {
     this.btnStart.disabled = phase !== 'READY' && phase !== 'PAUSED';
     this.btnPause.disabled = phase !== 'RUNNING';
 
-    const canEdit = phase === 'SETUP_P1' || phase === 'SETUP_P2' || phase === 'READY';
-    this.panelP1.setEnabled(canEdit);
-    this.panelP2.setEnabled(canEdit);
+    const canEdit = phase === 'SETUP' || phase === 'READY';
+    this.panelP1.setEnabled(canEdit && !state.p1Locked);
+    this.panelP2.setEnabled(canEdit && !state.p2Locked);
 
     this.setupUI.updateVisibility();
     this.saveLoadUI.updateVisibility(phase);
