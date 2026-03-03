@@ -292,6 +292,7 @@ export class GameUI {
   }
 
   private showReplayFromStats(): void {
+    this.statsScreen.hide();
     this.handleStateChange(this.game.getState());
   }
 
