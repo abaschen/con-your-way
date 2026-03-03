@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Con Your Way — Duel of Life</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="game-header">
+        <h1>Con Your Way</h1>
+        <p class="subtitle">A duel of cellular automata</p>
+      </header>
+
+      <div class="panels-row">
+        <!-- Player 1 Panel -->
+        <div class="player-panel" id="panel-p1" data-player="1">
+          <div class="player-title p1-color">Player 1 — Blue</div>
+          <div class="instruction-slots" id="slots-p1"></div>
+          <div class="save-row" id="save-row-p1" style="display:none">
+            <button class="btn btn-save p1-save" id="btn-save-p1">Save</button>
+            <div class="load-wrapper">
+              <button class="btn btn-load" id="btn-load-p1">Load ▾</button>
+              <div class="load-dropdown" id="dropdown-p1" style="display:none"></div>
+            </div>
+          </div>
+          <div class="cell-counter" id="counter-p1">Cells: 0 / 0</div>
+          <button class="btn btn-primary" id="btn-done-p1" style="display:none">Done Placing</button>
+        </div>
+
+        <!-- Center controls -->
+        <div class="center-controls">
+          <div class="status-bar" id="status-bar">Setting up Player 1...</div>
+          <div class="tick-info" id="tick-info">Tick: 0 / 500</div>
+          <div class="speed-control">
+            <label for="speed-slider">Speed</label>
+            <input type="range" id="speed-slider" min="50" max="1000" step="50" value="200" />
+            <span id="speed-label">200ms</span>
+          </div>
+          <div class="game-buttons">
+            <button class="btn btn-start" id="btn-start" disabled>▶ Start</button>
+            <button class="btn btn-pause" id="btn-pause" disabled>⏸ Pause</button>
+            <button class="btn btn-reset" id="btn-reset">↺ Reset</button>
+            <button class="btn btn-history-toggle active" id="btn-history-toggle" title="Toggle play history">☰ History</button>
+          </div>
+          <div class="share-row">
+            <button class="btn btn-share" id="btn-share" style="display:none">⎘ Share</button>
+            <span class="share-confirm" id="share-confirm" style="display:none">Copied!</span>
+          </div>
+        </div>
+
+        <!-- Player 2 Panel -->
+        <div class="player-panel" id="panel-p2" data-player="2">
+          <div class="player-title p2-color">Player 2 — Red</div>
+          <div class="instruction-slots" id="slots-p2"></div>
+          <div class="save-row" id="save-row-p2" style="display:none">
+            <button class="btn btn-save p2-save" id="btn-save-p2">Save</button>
+            <div class="load-wrapper">
+              <button class="btn btn-load" id="btn-load-p2">Load ▾</button>
+              <div class="load-dropdown" id="dropdown-p2" style="display:none"></div>
+            </div>
+          </div>
+          <div class="cell-counter" id="counter-p2">Cells: 0 / 0</div>
+          <button class="btn btn-primary" id="btn-done-p2" style="display:none">Done Placing</button>
+        </div>
+      </div>
+
+      <!-- Board + Plays Panel -->
+      <div class="board-area">
+        <div class="board-container">
+          <canvas id="game-canvas"></canvas>
+        </div>
+
+        <!-- Plays History Sidebar -->
+        <aside class="plays-panel" id="plays-panel">
+          <div class="plays-header">
+            <span class="plays-title">History</span>
+          </div>
+          <div class="plays-list" id="plays-list"></div>
+        </aside>
+      </div>
+
+      <!-- Replay panel (shown when history is available) -->
+      <div class="replay-panel" id="replay-panel" style="display:none">
+        <button class="btn btn-replay-ctrl" id="btn-replay-first" title="First tick">⏮</button>
+        <button class="btn btn-replay-ctrl" id="btn-replay-prev" title="Previous tick">◀</button>
+        <input type="range" id="replay-slider" min="0" max="0" value="0" />
+        <button class="btn btn-replay-ctrl" id="btn-replay-next" title="Next tick">▶</button>
+        <button class="btn btn-replay-ctrl" id="btn-replay-last" title="Last tick">⏭</button>
+        <span class="replay-tick-label" id="replay-tick-label">Tick 0</span>
+        <button class="btn btn-replay-exit" id="btn-replay-exit">Exit Replay</button>
+      </div>
+
+      <!-- Score bar -->
+      <div class="score-bar">
+        <span class="p1-color" id="score-p1">P1: 0 cells</span>
+        <span class="score-sep">vs</span>
+        <span class="p2-color" id="score-p2">P2: 0 cells</span>
+      </div>
+    </div>
+
+    <!-- Stats overlay (full-screen, shown at game end) -->
+    <div id="stats-overlay" class="stats-overlay" style="display:none"></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
