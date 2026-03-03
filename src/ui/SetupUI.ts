@@ -74,7 +74,7 @@ export class SetupUI {
     // Update Conway preview if in setup and not locked
     if (state.phase === 'SETUP') {
       if (!state.p1Locked && state.p1Cells > 0) {
-        const afterConway = applyConway(this.game.board.getState(), this.game.board);
+        const afterConway = applyConway(this.game.board.clone(), this.game.board);
         const p1After = Array.from(afterConway.values()).filter(c => c.owner === 1).length;
         this.previewValueP1.textContent = String(p1After);
         this.previewP1.style.display = 'block';
@@ -83,7 +83,7 @@ export class SetupUI {
       }
 
       if (!state.p2Locked && state.p2Cells > 0) {
-        const afterConway = applyConway(this.game.board.getState(), this.game.board);
+        const afterConway = applyConway(this.game.board.clone(), this.game.board);
         const p2After = Array.from(afterConway.values()).filter(c => c.owner === 2).length;
         this.previewValueP2.textContent = String(p2After);
         this.previewP2.style.display = 'block';
