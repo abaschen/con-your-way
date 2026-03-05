@@ -1,7 +1,9 @@
 {
+  "extends": ["@tsconfig/node-lts/tsconfig.json", "@tsconfig/node-ts/tsconfig.json"],
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "ES2024",
     "module": "ESNext",
+    "lib": ["DOM", "ES2024"],
     "moduleResolution": "bundler",
     "strict": true,
     "noUnusedLocals": true,
