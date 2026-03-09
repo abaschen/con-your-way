@@ -18,7 +18,7 @@
     "@playwright/test": "^1.58.2",
     "@tsconfig/node-lts": "^24.0.0",
     "@tsconfig/node-ts": "^23.6.4",
-    "@types/node": "^25.3.3",
+    "@types/node": "^25.3.5",
     "@vitest/ui": "^4.0.18",
     "jsdom": "^28.1.0",
     "typescript": "^5.4.0",
